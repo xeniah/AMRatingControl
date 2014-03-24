@@ -1,6 +1,6 @@
 # StarRatingControl
 
-###### This is a fork from [jasarien/JSFavStarControl](https://github.com/jasarien/JSFavStarControl).
+###### This is a fork from [amseddi/AMRatingControl](https://github.com/amseddi/AMRatingControl).
 
 StarRatingControl is a UI control that resembles the 'star rating' control seen in the iPod app.
 
