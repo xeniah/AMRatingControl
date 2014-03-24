@@ -1,10 +1,10 @@
-# AMRatingControl
+# StarRatingControl
 
 ###### This is a fork from [jasarien/JSFavStarControl](https://github.com/jasarien/JSFavStarControl).
 
-AMRatingControl is a UI control that resembles the 'star rating' control seen in the iPod app.
+StarRatingControl is a UI control that resembles the 'star rating' control seen in the iPod app.
 
-AMRatingControl allows you to select a rating starting from 0 to any number of stars you want.
+StarRatingControl allows you to select a rating starting from 0 to any number of stars you want.
 
 You can use default star symbols and customize colors or specify custom images.
 
@@ -14,12 +14,12 @@ You can use default star symbols and customize colors or specify custom images.
 **- Using [CocoaPods](http://cocoapods.org/)**
 
 ``` ruby
-pod 'AMRatingControl'
+pod 'StarRatingControl'
 ```
 
 **- Without CocoaPods**
 
-Add `AMRatingControl.h` and `AMRatingControl.m` to your project.
+Add `StarRatingControl.h` and `StarRatingControl.m` to your project.
 
 
 ## Example Usage
@@ -27,12 +27,12 @@ Add `AMRatingControl.h` and `AMRatingControl.m` to your project.
 
 ``` objective-c
 
-#include "AMRatingControl.h"
+#include "StarRatingControl.h"
 
 // Create a simple instance, initing with :
 // - a CGPoint (the position in your view from which it will be drawn)
 // - and max rating
-AMRatingControl *simpleRatingControl = [[AMRatingControl alloc] initWithLocation:(CGPoint)location
+StarRatingControl *simpleRatingControl = [[StarRatingControl alloc] initWithLocation:(CGPoint)location
                                                          			andMaxRating:(NSInteger)maxRating];
 
 // Customize the current rating if needed
@@ -53,7 +53,7 @@ simpleRatingControl.editingDidEndBlock = ^(NSUInteger rating)
 // - a CGPoint (the position in your view from which it will be drawn)
 // - a custom empty image and solid image if you wish (pass nil if you want to use the default).
 // - and max rating
-AMRatingControl *imagesRatingControl = [[AMRatingControl alloc] initWithLocation:(CGPoint)location
+StarRatingControl *imagesRatingControl = [[StarRatingControl alloc] initWithLocation:(CGPoint)location
                                           			                  emptyImage:(UIImage *)emptyImageOrNil
                                                      			      solidImage:(UIImage *)solidImageOrNil
 	                                                                andMaxRating:(NSInteger)maxRating];
@@ -62,7 +62,7 @@ AMRatingControl *imagesRatingControl = [[AMRatingControl alloc] initWithLocation
 // - a CGPoint (the position in your view from which it will be drawn)
 // - a custom empty image and solid image if you wish (pass nil if you want to use the default).
 // - and max rating
-AMRatingControl *coloredRatingControl = [[AMRatingControl alloc] initWithLocation:(CGPoint)location
+StarRatingControl *coloredRatingControl = [[StarRatingControl alloc] initWithLocation:(CGPoint)location
                                                                        emptyColor:(UIColor *)emptyColorOrNi
                                                                        solidColor:(UIColor *)solidColorOrNi
                                                                      andMaxRating:(NSInteger)maxRating];  
@@ -73,13 +73,13 @@ AMRatingControl *coloredRatingControl = [[AMRatingControl alloc] initWithLocatio
 [view addSubview:coloredRatingControl];
 ```
 
-<img src="https://raw.github.com/amseddi/AMRatingControl/master/screenshot.png" alt="Example ScreenShot" title="Example ScreenShot" style="display:block; margin: 0 auto;">
+<img src="https://raw.github.com/amseddi/StarRatingControl/master/screenshot.png" alt="Example ScreenShot" title="Example ScreenShot" style="display:block; margin: 0 auto;">
 
 ## ARC
 
-AMRatingControl uses ARC.
+StarRatingControl uses ARC.
 
 ## License
 
-AMRatingControl is available under the MIT license. See the LICENSE file for more info.
+StarRatingControl is available under the MIT license. See the LICENSE file for more info.
 
