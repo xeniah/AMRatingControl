@@ -46,12 +46,15 @@
     // - a CGPoint (the position in your view from which it will be drawn)
     // - a custom empty image and solid image if you wish (pass nil if you want to use the default).
     // - and max rating
-	UIImage *dot, *star;
-	dot = [UIImage imageNamed:@"dot.png"];
-	star = [UIImage imageNamed:@"star.png"];
+	UIImage *dot, *star, *halfStar;
+	dot = [UIImage imageNamed:@"empty_star.png"];
+	star = [UIImage imageNamed:@"full_star.png"];
+    halfStar= [UIImage imageNamed:@"half_star.png"];
+    
 	StarRatingControl *imagesRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(110, 250)
-                                                                          emptyImage:nil
+                                                                          emptyImage:dot
                                                                           solidImage:star
+                                                                        halfImage:halfStar
                                                               userInteractionEnabled:NO
                                                                        initialRating:3.6
                                                                         andMaxRating:5];

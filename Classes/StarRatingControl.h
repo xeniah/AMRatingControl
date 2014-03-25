@@ -72,6 +72,7 @@ typedef void (^EditingDidEndBlock)(NSUInteger rating);
 - (id)initWithLocation:(CGPoint)location
             emptyImage:(UIImage *)emptyImageOrNil
             solidImage:(UIImage *)solidImageOrNil
+             halfImage:(UIImage *)halfFillerImageOrNil
 userInteractionEnabled:(BOOL)userInteractionEnabled
          initialRating:(float)initialRating
           andMaxRating:(NSInteger)maxRating;

@@ -34,7 +34,7 @@ static const NSString *kDefaultSolidChar = @"★";
 @implementation StarRatingControl
 {
     BOOL _respondsToTranslatesAutoresizingMaskIntoConstraints;
-    UIImage *_emptyImage, *_solidImage;
+    UIImage *_emptyImage, *_solidImage, *_halfFilledImage;
     UIColor *_emptyColor, *_solidColor;
     NSInteger _maxRating;
 }
@@ -106,15 +106,35 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
          initialRating:(float)initialRating
           andMaxRating:(NSInteger)maxRating
 {
+    return [self initWithLocation:location
+                       emptyImage:emptyImageOrNil
+                       solidImage:solidImageOrNil
+                        halfImage:nil
+           userInteractionEnabled:userInteractionEnabled
+                    initialRating:initialRating
+                     andMaxRating:maxRating];
+}
+
+
+- (id)initWithLocation:(CGPoint)location
+            emptyImage:(UIImage *)emptyImageOrNil
+            solidImage:(UIImage *)solidImageOrNil
+             halfImage:(UIImage *)halfFillerImageOrNil
+userInteractionEnabled:(BOOL)userInteractionEnabled
+         initialRating:(float)initialRating
+          andMaxRating:(NSInteger)maxRating
+{
 	return [self initWithLocation:location
                        emptyImage:emptyImageOrNil
                        solidImage:solidImageOrNil
+                        halfImage:halfFillerImageOrNil
                        emptyColor:nil
                        solidColor:nil
            userInteractionEnabled:userInteractionEnabled
                     initialRating:initialRating
                      andMaxRating:maxRating];
 }
+
 
 - (id)initWithLocation:(CGPoint)location
             emptyColor:(UIColor *)emptyColor
@@ -170,7 +190,11 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 	}
     
 	if (_partialRating > 0.0) {
-        UIImage *partialStar = [self partialImage:_solidImage fraction:_partialRating];
+        UIImage *partialStar = _halfFilledImage;
+        if (!partialStar) {
+            partialStar = [self partialImage:_solidImage fraction:_partialRating];
+        }
+        
         [partialStar drawAtPoint:currPoint];
         currPoint.x += (_starWidthAndHeight + _starSpacing);
     }
@@ -229,6 +253,7 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 {
     [self initializeWithEmptyImage:emptyImageOrNil
                            solidImage:solidImageOrNil
+                      halfFilledImage:nil
                            emptyColor:emptyColor
                            solidColor:solidColor
                userInteractionEnabled:YES
@@ -238,6 +263,7 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 
 - (void)initializeWithEmptyImage:(UIImage *)emptyImageOrNil
                       solidImage:(UIImage *)solidImageOrNil
+                 halfFilledImage:(UIImage *)halfFilledImageOrNil
                       emptyColor:(UIColor *)emptyColor
                       solidColor:(UIColor *)solidColor
           userInteractionEnabled:(BOOL)userInteractionEnabled
@@ -252,6 +278,7 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
     
     _emptyImage = emptyImageOrNil;
     _solidImage = solidImageOrNil;
+    _halfFilledImage = halfFilledImageOrNil;
     _emptyColor = emptyColor;
     _solidColor = solidColor;
     _maxRating = maxRating;
@@ -269,6 +296,7 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
     if (self) {
         [self initializeWithEmptyImage:nil
                             solidImage:nil
+                       halfFilledImage:nil
                             emptyColor:nil
                             solidColor:nil
                             userInteractionEnabled:YES
@@ -282,6 +310,7 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 - (id)initWithLocation:(CGPoint)location
             emptyImage:(UIImage *)emptyImageOrNil
             solidImage:(UIImage *)solidImageOrNil
+            halfImage:(UIImage *)halfFillerImageOrNil
             emptyColor:(UIColor *)emptyColor
             solidColor:(UIColor *)solidColor
 userInteractionEnabled:(BOOL)userInteractionEnabled
@@ -295,6 +324,7 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 	{
 		[self initializeWithEmptyImage:emptyImageOrNil
                             solidImage:solidImageOrNil
+                        halfFilledImage:halfFillerImageOrNil
                             emptyColor:emptyColor
                             solidColor:solidColor
                 userInteractionEnabled:(BOOL)userInteractionEnabled
@@ -319,6 +349,7 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 	{
 		[self initializeWithEmptyImage:emptyImageOrNil
                             solidImage:solidImageOrNil
+                                halfFilledImage:nil
                             emptyColor:emptyColor
                             solidColor:solidColor
                 userInteractionEnabled:YES
