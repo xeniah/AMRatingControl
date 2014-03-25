@@ -11,14 +11,6 @@ You can use default star symbols and customize colors or specify custom images.
 
 ## How To Get Started
 
-**- Using [CocoaPods](http://cocoapods.org/)**
-
-``` ruby
-pod 'StarRatingControl'
-```
-
-**- Without CocoaPods**
-
 Add `StarRatingControl.h` and `StarRatingControl.m` to your project.
 
 
