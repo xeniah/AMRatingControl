@@ -45,7 +45,9 @@
     // Create an instance with images, initing with :
     // - a CGPoint (the position in your view from which it will be drawn)
     // - a custom empty image and solid image if you wish (pass nil if you want to use the default).
+    // - initial rating (how many stars the rating will have initially when displayed)
     // - and max rating
+    // This control, when initialized with (at least) the fullStar image will support partial rating stars, i.e., 3.5
 	UIImage *emptyStar, *fullStar;
 	emptyStar = [UIImage imageNamed:@"star_rating_empty.png"];
 	fullStar = [UIImage imageNamed:@"star_rating_full.png"];
@@ -58,7 +60,7 @@
   
     // Create an instance with custom color, initing with :
     // - a CGPoint (the position in your view from which it will be drawn)
-    // - a custom empty image and solid image if you wish (pass nil if you want to use the default).
+    // - colors for "empty" and "full" rating stars
     // - and max rating
 	StarRatingControl *coloredRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(110, 370)
                                                                            emptyColor:[UIColor yellowColor]
