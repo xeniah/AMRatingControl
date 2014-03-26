@@ -46,19 +46,16 @@
     // - a CGPoint (the position in your view from which it will be drawn)
     // - a custom empty image and solid image if you wish (pass nil if you want to use the default).
     // - and max rating
-	UIImage *dot, *star, *halfStar;
-	dot = [UIImage imageNamed:@"empty_star.png"];
-	star = [UIImage imageNamed:@"full_star.png"];
-    halfStar= [UIImage imageNamed:@"half_star.png"];
-    
+	UIImage *emptyStar, *fullStar;
+	emptyStar = [UIImage imageNamed:@"star_rating_empty.png"];
+	fullStar = [UIImage imageNamed:@"star_rating_full.png"];
+  
 	StarRatingControl *imagesRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(110, 250)
-                                                                          emptyImage:dot
-                                                                          solidImage:star
-                                                                        halfImage:halfStar
-                                                              userInteractionEnabled:NO
-                                                                       initialRating:3.6
+                                                                          emptyImage:emptyStar
+                                                                          solidImage:fullStar
+                                                                       initialRating:3.5
                                                                         andMaxRating:5];
-    
+  
     // Create an instance with custom color, initing with :
     // - a CGPoint (the position in your view from which it will be drawn)
     // - a custom empty image and solid image if you wish (pass nil if you want to use the default).
@@ -67,7 +64,6 @@
                                                                            emptyColor:[UIColor yellowColor]
                                                                            solidColor:[UIColor redColor]
                                                                          andMaxRating:5];
-    
     
     
     

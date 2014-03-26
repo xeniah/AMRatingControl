@@ -9,12 +9,11 @@
 
 // Constants :
 static const CGFloat kFontSize = 20;
-static const NSInteger kStarWidthAndHeight = 20;
+static const NSInteger kStarWidthAndHeight = 27;
 static const NSInteger kStarSpacing = 0;
 
 static const NSString *kDefaultEmptyChar = @"☆";
 static const NSString *kDefaultSolidChar = @"★";
-
 
 @interface StarRatingControl (Private)
 
@@ -34,9 +33,10 @@ static const NSString *kDefaultSolidChar = @"★";
 @implementation StarRatingControl
 {
     BOOL _respondsToTranslatesAutoresizingMaskIntoConstraints;
-    UIImage *_emptyImage, *_solidImage, *_halfFilledImage;
+    UIImage *_emptyImage, *_solidImage;
     UIColor *_emptyColor, *_solidColor;
     NSInteger _maxRating;
+    BOOL _partialStarsAllowed;
 }
 
 /**************************************************************************************************/
@@ -52,7 +52,7 @@ static const NSString *kDefaultSolidChar = @"★";
     [self setNeedsDisplay];
 }
 
-- (void)setRating:(NSInteger)rating
+- (void)setRating:(float)rating
 {
     _rating = (rating < 0) ? 0 : rating;
     _rating = (rating > _maxRating) ? _maxRating : rating;
@@ -99,38 +99,18 @@ static const NSString *kDefaultSolidChar = @"★";
                      andMaxRating:maxRating];
 }
 
+
 - (id)initWithLocation:(CGPoint)location
             emptyImage:(UIImage *)emptyImageOrNil
             solidImage:(UIImage *)solidImageOrNil
-userInteractionEnabled:(BOOL)userInteractionEnabled
          initialRating:(float)initialRating
           andMaxRating:(NSInteger)maxRating
 {
     return [self initWithLocation:location
                        emptyImage:emptyImageOrNil
                        solidImage:solidImageOrNil
-                        halfImage:nil
-           userInteractionEnabled:userInteractionEnabled
-                    initialRating:initialRating
-                     andMaxRating:maxRating];
-}
-
-
-- (id)initWithLocation:(CGPoint)location
-            emptyImage:(UIImage *)emptyImageOrNil
-            solidImage:(UIImage *)solidImageOrNil
-             halfImage:(UIImage *)halfFillerImageOrNil
-userInteractionEnabled:(BOOL)userInteractionEnabled
-         initialRating:(float)initialRating
-          andMaxRating:(NSInteger)maxRating
-{
-	return [self initWithLocation:location
-                       emptyImage:emptyImageOrNil
-                       solidImage:solidImageOrNil
-                        halfImage:halfFillerImageOrNil
                        emptyColor:nil
                        solidColor:nil
-           userInteractionEnabled:userInteractionEnabled
                     initialRating:initialRating
                      andMaxRating:maxRating];
 }
@@ -173,9 +153,12 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 - (void)drawRect:(CGRect)rect
 {
 	CGPoint currPoint = CGPointZero;
+    int wholeStars = (int)floor(_rating);
+    float partialStars = _rating - (float)wholeStars;
 	
-	for (int i = 0; i < _rating; i++)
+	for (int i = 0; i < wholeStars; i++)
 	{
+        
 		if (_solidImage)
         {
             [_solidImage drawAtPoint:currPoint];
@@ -189,17 +172,14 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 		currPoint.x += (_starWidthAndHeight + _starSpacing);
 	}
     
-	if (_partialRating > 0.0) {
-        UIImage *partialStar = _halfFilledImage;
-        if (!partialStar) {
-            partialStar = [self partialImage:_solidImage fraction:_partialRating];
-        }
-        
+    if (partialStars > 0) {
+        UIImage *partialStar = [self partialImage:_solidImage fraction:partialStars];
+        [_emptyImage drawAtPoint:currPoint];
         [partialStar drawAtPoint:currPoint];
         currPoint.x += (_starWidthAndHeight + _starSpacing);
     }
-    
-	NSInteger remaining = (floor)(_maxRating - _rating - _partialRating) ;
+   
+	NSInteger remaining = (floor)(_maxRating - _rating) ;
 	
 	for (int i = 0; i < remaining; i++)
 	{
@@ -253,41 +233,38 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 {
     [self initializeWithEmptyImage:emptyImageOrNil
                            solidImage:solidImageOrNil
-                      halfFilledImage:nil
                            emptyColor:emptyColor
                            solidColor:solidColor
-               userInteractionEnabled:YES
                      initialRating:0.0
                          andMaxRating:maxRating];
 }
 
 - (void)initializeWithEmptyImage:(UIImage *)emptyImageOrNil
                       solidImage:(UIImage *)solidImageOrNil
-                 halfFilledImage:(UIImage *)halfFilledImageOrNil
                       emptyColor:(UIColor *)emptyColor
                       solidColor:(UIColor *)solidColor
-          userInteractionEnabled:(BOOL)userInteractionEnabled
                    initialRating:(float)initialRating
                     andMaxRating:(NSInteger)maxRating
 {
     _respondsToTranslatesAutoresizingMaskIntoConstraints = [self respondsToSelector:@selector(translatesAutoresizingMaskIntoConstraints)];
     
-    _rating = 0;
     self.backgroundColor = [UIColor clearColor];
     self.opaque = NO;
     
     _emptyImage = emptyImageOrNil;
     _solidImage = solidImageOrNil;
-    _halfFilledImage = halfFilledImageOrNil;
     _emptyColor = emptyColor;
     _solidColor = solidColor;
     _maxRating = maxRating;
-    _rating =  (int)(floor(initialRating));
-    _partialRating = initialRating - (float)_rating;
+    _rating =  initialRating;
     _starFontSize = kFontSize;
     _starWidthAndHeight = kStarWidthAndHeight;
     _starSpacing = kStarSpacing;
-    self.userInteractionEnabled = userInteractionEnabled;
+    
+    if(!_emptyColor && !_solidColor && _solidImage)
+    {
+        _partialStarsAllowed = YES;
+    }
 }
 
 - (id)initWithCoder:(NSCoder *)decoder
@@ -296,10 +273,8 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
     if (self) {
         [self initializeWithEmptyImage:nil
                             solidImage:nil
-                       halfFilledImage:nil
                             emptyColor:nil
                             solidColor:nil
-                            userInteractionEnabled:YES
                             initialRating:0.0
                           andMaxRating:0];
     }
@@ -310,10 +285,8 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 - (id)initWithLocation:(CGPoint)location
             emptyImage:(UIImage *)emptyImageOrNil
             solidImage:(UIImage *)solidImageOrNil
-            halfImage:(UIImage *)halfFillerImageOrNil
             emptyColor:(UIColor *)emptyColor
             solidColor:(UIColor *)solidColor
-userInteractionEnabled:(BOOL)userInteractionEnabled
          initialRating:(float)initialRating
           andMaxRating:(NSInteger)maxRating
 {
@@ -324,10 +297,8 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 	{
 		[self initializeWithEmptyImage:emptyImageOrNil
                             solidImage:solidImageOrNil
-                        halfFilledImage:halfFillerImageOrNil
                             emptyColor:emptyColor
                             solidColor:solidColor
-                userInteractionEnabled:(BOOL)userInteractionEnabled
                          initialRating:(float)initialRating
                           andMaxRating:maxRating];
 	}
@@ -349,10 +320,8 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 	{
 		[self initializeWithEmptyImage:emptyImageOrNil
                             solidImage:solidImageOrNil
-                                halfFilledImage:nil
                             emptyColor:emptyColor
                             solidColor:solidColor
-                userInteractionEnabled:YES
                          initialRating:0.0f
                           andMaxRating:maxRating];
 	}
@@ -379,15 +348,12 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 
 - (void)handleTouch:(UITouch *)touch
 {
-    if (!self.userInteractionEnabled) {
-        return;
-    }
     CGFloat width = self.frame.size.width;
 	CGRect section = CGRectMake(0, 0, _starWidthAndHeight, self.frame.size.height);
 	
 	CGPoint touchLocation = [touch locationInView:self];
 	
-	if (touchLocation.x < 0)
+	if (touchLocation.x < 0 || touchLocation.x < ((float)kStarWidthAndHeight)/3.0)
 	{
 		if (_rating != 0)
 		{
@@ -411,19 +377,53 @@ userInteractionEnabled:(BOOL)userInteractionEnabled
 	}
 	else
 	{
+        float halfWidth = (float)_starWidthAndHeight/2.0;
+        
 		for (int i = 0 ; i < _maxRating ; i++)
 		{
-			if ((touchLocation.x > section.origin.x) && (touchLocation.x < (section.origin.x + _starWidthAndHeight)))
+			if (touchLocation.x > section.origin.x)
 			{
-				if (_rating != (i + 1))
-				{
-					_rating = i + 1;
-                    if (self.editingChangedBlock)
-                    {
-                        self.editingChangedBlock(_rating);
+                if (_partialStarsAllowed) {
+                    // first half of the star
+                    if (touchLocation.x < (section.origin.x + halfWidth)) {
+                        if (_rating != (i + 0.5))
+                        {
+                            _rating = i + 0.5;
+                            if (self.editingChangedBlock)
+                            {
+                                self.editingChangedBlock(_rating);
+                            }
+                        }
+                        break;
                     }
-				}
-				break;
+                    
+                    // second half of the star
+                    if (touchLocation.x > (section.origin.x + halfWidth) &&
+                        touchLocation.x < (section.origin.x + _starWidthAndHeight)) {
+                        if (_rating != (i + 1))
+                        {
+                            _rating = i + 1;
+                            if (self.editingChangedBlock)
+                            {
+                                self.editingChangedBlock(_rating);
+                            }
+                        }
+                        break;
+                    }
+                }else{ // only wholestars
+                    if (touchLocation.x < (section.origin.x + _starWidthAndHeight)) {
+                        if (_rating != (i + 1))
+                        {
+                            _rating = i + 1;
+                            if (self.editingChangedBlock)
+                            {
+                                self.editingChangedBlock(_rating);
+                            }
+                        }
+                        break;
+                    }
+                }
+ 
 			}
 			section.origin.x += (_starWidthAndHeight + _starSpacing);
 		}
