@@ -74,7 +74,7 @@ Add `StarRatingControl.h` and `StarRatingControl.m` to your project.
 [view addSubview:coloredRatingControl];
 ```
 
-<img src="https://raw.github.com/amseddi/StarRatingControl/master/screenshot.png" alt="Example ScreenShot" title="Example ScreenShot" style="display:block; margin: 0 auto;">
+<img src="https://raw.githubusercontent.com/xeniah/StarRatingControl/master/Screen%20Shot%202014-03-26%20at%206.29.49%20PM.png" alt="StarRatingControl ScreenShot" title="StarRatingControl ScreenShot" style="display:block; margin: 0 auto;">
 
 ## ARC
 
