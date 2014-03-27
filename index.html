@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Star Rating Control by xeniah</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Star Rating Control</h1>
+        <p>A simple rating control for the iPhone</p>
+
+        <p class="view"><a href="https://github.com/xeniah/StarRatingControl">View the Project on GitHub <small>xeniah/StarRatingControl</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/xeniah/StarRatingControl/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/xeniah/StarRatingControl/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/xeniah/StarRatingControl">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p># StarRatingControl</p>
+
+<h6>
+<a name="this-is-a-fork-from-amseddiamratingcontrol" class="anchor" href="#this-is-a-fork-from-amseddiamratingcontrol"><span class="octicon octicon-link"></span></a>This is a fork from <a href="https://github.com/amseddi/AMRatingControl">amseddi/AMRatingControl</a>.</h6>
+
+<p>StarRatingControl is a UI control that resembles the 'star rating' control seen in the iPod app.</p>
+
+<p>StarRatingControl allows you to select a rating starting from 0 to any number of stars you want.</p>
+
+<p>You can use default star symbols and customize colors or specify custom images.</p>
+
+<h2>
+<a name="how-to-get-started" class="anchor" href="#how-to-get-started"><span class="octicon octicon-link"></span></a>How To Get Started</h2>
+
+<p>Add <code>StarRatingControl.h</code> and <code>StarRatingControl.m</code> to your project.</p>
+
+<h2>
+<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example Usage</h2>
+
+<div class="highlight highlight-objective-c"><pre><span class="cp">    #import "StarRatingControl.h"</span>
+
+    <span class="c1">// Create a simple instance, initing with :</span>
+    <span class="c1">// - a CGPoint (the position in your view from which it will be drawn)</span>
+    <span class="c1">// - and max rating</span>
+    <span class="n">StarRatingControl</span> <span class="o">*</span><span class="n">simpleRatingControl</span> <span class="o">=</span> <span class="p">[[</span><span class="n">StarRatingControl</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithLocation</span><span class="o">:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+                                                                        <span class="nl">andMaxRating:</span><span class="mi">5</span><span class="p">];</span>
+
+    <span class="c1">// Customize the current rating if needed</span>
+    <span class="p">[</span><span class="n">simpleRatingControl</span> <span class="n">setRating</span><span class="o">:</span><span class="mi">3</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">simpleRatingControl</span> <span class="n">setStarSpacing</span><span class="o">:</span><span class="mi">10</span><span class="p">];</span>
+
+    <span class="c1">// Define block to handle events</span>
+    <span class="n">simpleRatingControl</span><span class="p">.</span><span class="n">editingChangedBlock</span> <span class="o">=</span> <span class="o">^</span><span class="p">(</span><span class="n">NSUInteger</span> <span class="n">rating</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">label</span> <span class="n">setText</span><span class="o">:</span><span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@"%d"</span><span class="p">,</span> <span class="n">rating</span><span class="p">]];</span>
+    <span class="p">};</span>
+
+    <span class="n">simpleRatingControl</span><span class="p">.</span><span class="n">editingDidEndBlock</span> <span class="o">=</span> <span class="o">^</span><span class="p">(</span><span class="n">NSUInteger</span> <span class="n">rating</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">endLabel</span> <span class="n">setText</span><span class="o">:</span><span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@"%d"</span><span class="p">,</span> <span class="n">rating</span><span class="p">]];</span>
+    <span class="p">};</span>
+
+
+    <span class="c1">// Create an instance with images, initing with :</span>
+    <span class="c1">// - a CGPoint (the position in your view from which it will be drawn)</span>
+    <span class="c1">// - a custom empty image and solid image if you wish (pass nil if you want to use the default).</span>
+    <span class="c1">// - initial rating (how many stars the rating will have initially when displayed)</span>
+    <span class="c1">// - and max rating</span>
+    <span class="c1">// This control, when initialized with (at least) the fullStar image will support partial rating stars, i.e., 3.5</span>
+    <span class="n">UIImage</span> <span class="o">*</span><span class="n">emptyStar</span><span class="p">,</span> <span class="o">*</span><span class="n">fullStar</span><span class="p">;</span>
+    <span class="n">emptyStar</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIImage</span> <span class="n">imageNamed</span><span class="o">:</span><span class="s">@"star_rating_empty.png"</span><span class="p">];</span>
+    <span class="n">fullStar</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIImage</span> <span class="n">imageNamed</span><span class="o">:</span><span class="s">@"star_rating_full.png"</span><span class="p">];</span>
+
+    <span class="n">StarRatingControl</span> <span class="o">*</span><span class="n">imagesRatingControl</span> <span class="o">=</span> <span class="p">[[</span><span class="n">StarRatingControl</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithLocation</span><span class="o">:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+                                                                          <span class="nl">emptyImage:</span><span class="n">emptyStar</span>
+                                                                          <span class="nl">solidImage:</span><span class="n">fullStar</span>
+                                                                       <span class="nl">initialRating:</span><span class="mf">3.5</span>
+                                                                        <span class="nl">andMaxRating:</span><span class="mi">5</span><span class="p">];</span>
+
+    <span class="c1">// Create an instance with custom color, initing with :</span>
+    <span class="c1">// - a CGPoint (the position in your view from which it will be drawn)</span>
+    <span class="c1">// - colors for "empty" and "full" rating stars</span>
+    <span class="c1">// - and max rating</span>
+    <span class="n">StarRatingControl</span> <span class="o">*</span><span class="n">coloredRatingControl</span> <span class="o">=</span> <span class="p">[[</span><span class="n">StarRatingControl</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithLocation</span><span class="o">:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="mi">370</span><span class="p">)</span>
+                                                                           <span class="nl">emptyColor:</span><span class="p">[</span><span class="n">UIColor</span> <span class="n">yellowColor</span><span class="p">]</span>
+                                                                           <span class="nl">solidColor:</span><span class="p">[</span><span class="n">UIColor</span> <span class="n">redColor</span><span class="p">]</span>
+                                                                         <span class="nl">andMaxRating:</span><span class="mi">5</span><span class="p">];</span>
+
+
+<span class="c1">// Add the control(s) as subview of your view</span>
+<span class="p">[</span><span class="n">view</span> <span class="n">addSubview</span><span class="o">:</span><span class="n">simpleRatingControl</span><span class="p">];</span>
+<span class="p">[</span><span class="n">view</span> <span class="n">addSubview</span><span class="o">:</span><span class="n">imagesRatingControl</span><span class="p">];</span>
+<span class="p">[</span><span class="n">view</span> <span class="n">addSubview</span><span class="o">:</span><span class="n">coloredRatingControl</span><span class="p">];</span>
+</pre></div>
+
+<p><img src="https://raw.github.com/amseddi/StarRatingControl/master/screenshot.png" alt="Example ScreenShot" title="Example ScreenShot"></p>
+
+<h2>
+<a name="arc" class="anchor" href="#arc"><span class="octicon octicon-link"></span></a>ARC</h2>
+
+<p>StarRatingControl uses ARC.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>StarRatingControl is available under the MIT license. See the LICENSE file for more info.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/xeniah">xeniah</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
