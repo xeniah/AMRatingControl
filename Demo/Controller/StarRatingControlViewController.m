@@ -23,7 +23,7 @@
     // Create a simple instance, initing with :
     // - a CGPoint (the position in your view from which it will be drawn)
     // - and max rating
-	StarRatingControl *simpleRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(90, 50)
+	StarRatingControl *simpleRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(80, 60)
                                                                         andMaxRating:5];
     
     // Customize the current rating if needed
@@ -52,7 +52,7 @@
 	emptyStar = [UIImage imageNamed:@"star_rating_empty.png"];
 	fullStar = [UIImage imageNamed:@"star_rating_full.png"];
   
-	StarRatingControl *imagesRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(110, 250)
+	StarRatingControl *imagesRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(90, 220)
                                                                           emptyImage:emptyStar
                                                                           solidImage:fullStar
                                                                        initialRating:3.5
@@ -62,7 +62,7 @@
     // - a CGPoint (the position in your view from which it will be drawn)
     // - colors for "empty" and "full" rating stars
     // - and max rating
-	StarRatingControl *coloredRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(110, 370)
+	StarRatingControl *coloredRatingControl = [[StarRatingControl alloc] initWithLocation:CGPointMake(90, 380)
                                                                            emptyColor:[UIColor yellowColor]
                                                                            solidColor:[UIColor redColor]
                                                                          andMaxRating:5];

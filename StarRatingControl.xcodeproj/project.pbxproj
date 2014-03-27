@@ -13,7 +13,6 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		758D370E112C04F6003C8E62 /* StarRatingControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 758D370D112C04F6003C8E62 /* StarRatingControl.m */; };
-		758D3712112C0881003C8E62 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 758D3710112C0881003C8E62 /* star.png */; };
 		A9542AAD18E270A000145FB6 /* star_rating_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A9542AAA18E270A000145FB6 /* star_rating_empty.png */; };
 		A9542AAE18E270A000145FB6 /* star_rating_full.png in Resources */ = {isa = PBXBuildFile; fileRef = A9542AAB18E270A000145FB6 /* star_rating_full.png */; };
 		C94C7B021619D449008701B7 /* StarRatingControlAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C94C7AFD1619D449008701B7 /* StarRatingControlAppDelegate.m */; };
@@ -31,7 +30,6 @@
 		32CA4F630368D1EE00C91783 /* StarRatingControl_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarRatingControl_Prefix.pch; sourceTree = "<group>"; };
 		758D370C112C04F6003C8E62 /* StarRatingControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarRatingControl.h; sourceTree = "<group>"; };
 		758D370D112C04F6003C8E62 /* StarRatingControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarRatingControl.m; sourceTree = "<group>"; };
-		758D3710112C0881003C8E62 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* StarRatingControl-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "StarRatingControl-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A9542AAA18E270A000145FB6 /* star_rating_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_rating_empty.png; sourceTree = "<group>"; };
 		A9542AAB18E270A000145FB6 /* star_rating_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_rating_full.png; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 			children = (
 				A9542AAA18E270A000145FB6 /* star_rating_empty.png */,
 				A9542AAB18E270A000145FB6 /* star_rating_full.png */,
-				758D3710112C0881003C8E62 /* star.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* StarRatingControl-Info.plist */,
 			);
@@ -200,7 +197,6 @@
 			files = (
 				A9542AAD18E270A000145FB6 /* star_rating_empty.png in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				758D3712112C0881003C8E62 /* star.png in Resources */,
 				C94C7B041619D449008701B7 /* StarRatingControlViewController.xib in Resources */,
 				A9542AAE18E270A000145FB6 /* star_rating_full.png in Resources */,
 			);
