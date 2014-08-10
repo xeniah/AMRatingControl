@@ -6,6 +6,11 @@
 
 #import "StarRatingControl.h"
 
+// return true if the device has a retina display, false otherwise
+#define IS_RETINA_DISPLAY() [[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2.0f
+
+// return the scale value based on device's display (2 retina, 1 other)
+#define DISPLAY_SCALE IS_RETINA_DISPLAY() ? 2.0f : 1.0f
 
 // Constants :
 static const CGFloat kFontSize = 20;
@@ -166,7 +171,7 @@ static const NSString *kDefaultSolidChar = @"★";
 		else
         {
             CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), _solidColor.CGColor);
-            [kDefaultSolidChar drawAtPoint:currPoint withFont:[UIFont boldSystemFontOfSize:_starFontSize]];
+            [kDefaultSolidChar drawAtPoint:currPoint withAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:_starFontSize]}];
         }
         
 		currPoint.x += (_starWidthAndHeight + _starSpacing);
@@ -190,7 +195,7 @@ static const NSString *kDefaultSolidChar = @"★";
 		else
         {
             CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), _emptyColor.CGColor);
-			[kDefaultEmptyChar drawAtPoint:currPoint withFont:[UIFont boldSystemFontOfSize:_starFontSize]];
+			[kDefaultEmptyChar drawAtPoint:currPoint withAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:_starFontSize]}];
         }
 		currPoint.x += (_starWidthAndHeight + _starSpacing);
 	}
@@ -434,8 +439,8 @@ static const NSString *kDefaultSolidChar = @"★";
 - (UIImage *) partialImage:(UIImage *)image fraction:(float)fraction
 {
     CGImageRef imgRef = image.CGImage;
-    CGImageRef fractionalImgRef = CGImageCreateWithImageInRect(imgRef, CGRectMake(0, 0, image.size.width * fraction, image.size.height));
-    UIImage *fractionalImg = [UIImage imageWithCGImage:fractionalImgRef];
+    CGImageRef fractionalImgRef = CGImageCreateWithImageInRect(imgRef, CGRectMake(0, 0, CGImageGetWidth(imgRef) * fraction, CGImageGetHeight(imgRef)));
+    UIImage *fractionalImg = [UIImage imageWithCGImage:fractionalImgRef scale:DISPLAY_SCALE orientation:UIImageOrientationUp];
     CGImageRelease(fractionalImgRef);
     return fractionalImg;
 }
